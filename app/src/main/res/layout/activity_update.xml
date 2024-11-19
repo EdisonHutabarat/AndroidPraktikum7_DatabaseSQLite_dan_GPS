@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,124 +13,105 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <TextView
         android:id="@+id/tvJudul"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/update_mahasiswa"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="30dp"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="@string/update_mahasiswa"
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvNIM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/cari_mahasiswa"
-        android:textStyle="bold"
         android:layout_below="@+id/tvJudul"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        android:text="@string/nim"
+        android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/llCariNIM"
+    <EditText
+        android:id="@+id/etNIM"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvNIM"
-        android:orientation="horizontal"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp">
-
-        <EditText
-            android:id="@+id/etNIM"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:minHeight="48dp"
-            android:hint="@string/masukan_nim"
-            android:autofillHints=""
-            android:inputType="number" />
-
-        <ImageButton
-            android:id="@+id/btnCari"
-            android:layout_width="54dp"
-            android:layout_height="wrap_content"
-            android:minHeight="48dp"
-            android:contentDescription="@string/cari_mahasiswa"
-            android:src="@drawable/baseline_person_search_24"/>
-
-    </LinearLayout>
+        android:layout_marginEnd="16dp"
+        android:autofillHints=""
+        android:hint="@string/masukan_nim"
+        android:inputType="number"
+        android:minHeight="48dp" />
 
     <TextView
         android:id="@+id/tvNama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nama"
-        android:textStyle="bold"
-        android:layout_below="@+id/llCariNIM"
+        android:layout_below="@+id/etNIM"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:text="@string/nama"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etNama"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="48dp"
+        android:layout_below="@+id/tvNama"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:autofillHints=""
         android:hint="@string/masukan_nama"
         android:inputType="textPersonName"
-        android:layout_below="@+id/tvNama"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:minHeight="48dp" />
 
     <TextView
         android:id="@+id/tvUmur"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/umur"
-        android:textStyle="bold"
         android:layout_below="@+id/etNama"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:text="@string/umur"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etUmur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="48dp"
+        android:layout_below="@+id/tvUmur"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:autofillHints=""
         android:hint="@string/masukan_umur"
         android:inputType="number"
-        android:layout_below="@+id/tvUmur"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"/>
+        android:minHeight="48dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp">
+        android:layout_margin="16dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btnUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/update"
             android:layout_marginEnd="5dp"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5"
+            android:text="@string/update" />
 
         <Button
             android:id="@+id/btnHapus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hapus"
-            android:layout_weight="0.5"/>
-
+            android:layout_weight="0.5"
+            android:text="@string/hapus" />
     </LinearLayout>
-
 </RelativeLayout>

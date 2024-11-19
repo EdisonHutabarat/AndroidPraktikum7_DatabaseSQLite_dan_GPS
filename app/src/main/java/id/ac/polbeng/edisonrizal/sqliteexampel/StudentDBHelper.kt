@@ -9,21 +9,19 @@ import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 
 class StudentDBHelper(context: Context) : SQLiteOpenHelper(
-    context,
-    DATABASE_NAME,
+    context, DATABASE_NAME,
     null,
     DATABASE_VERSION
 ) {
     companion object {
-        // If you change the database schema, you must increment the database version.
         const val DATABASE_VERSION = 1
         const val DATABASE_NAME = "FeedReader.db"
+
         private const val SQL_CREATE_ENTRIES =
             "CREATE TABLE " + DBContract.UserEntry.TABLE_NAME + " (" +
-                    DBContract.UserEntry.COLUMN_NIM + " TEXT PRIMARY KEY," +
+                    DBContract.UserEntry.COLUMN_NIM + " TEXT PRIMAR KEY," +
                     DBContract.UserEntry.COLUMN_NAME + " TEXT," +
                     DBContract.UserEntry.COLUMN_AGE + " TEXT)"
-
         private const val SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + DBContract.UserEntry.TABLE_NAME
     }
@@ -32,36 +30,26 @@ class StudentDBHelper(context: Context) : SQLiteOpenHelper(
         db.execSQL(SQL_CREATE_ENTRIES)
     }
 
-    override fun onUpgrade(
-        db: SQLiteDatabase, oldVersion: Int,
-        newVersion: Int
-    ) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+
         db.execSQL(SQL_DELETE_ENTRIES)
         onCreate(db)
     }
 
-    override fun onDowngrade(
-        db: SQLiteDatabase, oldVersion: Int,
-        newVersion: Int
-    ) {
+    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         onUpgrade(db, oldVersion, newVersion)
     }
 
     @Throws(SQLiteConstraintException::class)
-
     fun createStudent(student: StudentModel): Long {
-        // Gets the data repository in write mode
+
         val db = writableDatabase
 
-        // Create a new map of values, where column names are the keys
         val values = ContentValues()
         values.put(DBContract.UserEntry.COLUMN_NIM, student.nim)
         values.put(DBContract.UserEntry.COLUMN_NAME, student.name)
         values.put(DBContract.UserEntry.COLUMN_AGE, student.age)
 
-        // Insert the new row, returning the primary key value of the new row
         return db.insert(
             DBContract.UserEntry.TABLE_NAME, null,
             values
@@ -72,7 +60,6 @@ class StudentDBHelper(context: Context) : SQLiteOpenHelper(
         val students = ArrayList<StudentModel>()
         val db = writableDatabase
         val cursor: Cursor?
-
         try {
             cursor = db.rawQuery(
                 "select * from " +
@@ -80,7 +67,7 @@ class StudentDBHelper(context: Context) : SQLiteOpenHelper(
                         DBContract.UserEntry.COLUMN_NIM + "='" + nim + "'", null
             )
         } catch (e: SQLiteException) {
-            // if table not yet present, create it
+
             db.execSQL(SQL_CREATE_ENTRIES)
             return ArrayList()
         }
@@ -88,8 +75,10 @@ class StudentDBHelper(context: Context) : SQLiteOpenHelper(
         var age: String
         with(cursor) {
             if (moveToNext()) {
-                name = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_NAME))
-                age = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_AGE))
+                name =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_NAME))
+                age =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_AGE))
                 students.add(StudentModel(nim, name, age))
             }
         }
@@ -101,7 +90,6 @@ class StudentDBHelper(context: Context) : SQLiteOpenHelper(
         val students = ArrayList<StudentModel>()
         val db = writableDatabase
         val cursor: Cursor?
-
         try {
             cursor = db.rawQuery(
                 "select * from " +
@@ -118,9 +106,12 @@ class StudentDBHelper(context: Context) : SQLiteOpenHelper(
         var age: String
         with(cursor) {
             while (moveToNext()) {
-                nim = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_NIM))
-                name = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_NAME))
-                age = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_AGE))
+                nim =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_NIM))
+                name =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_NAME))
+                age =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_AGE))
                 students.add(StudentModel(nim, name, age))
             }
         }
@@ -147,9 +138,12 @@ class StudentDBHelper(context: Context) : SQLiteOpenHelper(
         var age: String
         with(cursor) {
             while (moveToNext()) {
-                nim = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_NIM))
-                name = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_NAME))
-                age = cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_AGE))
+                nim =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_NIM))
+                name =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_NAME))
+                age =
+                    cursor.getString(cursor.getColumnIndexOrThrow(DBContract.UserEntry.COLUMN_AGE))
                 users.add(StudentModel(nim, name, age))
             }
         }
@@ -158,20 +152,16 @@ class StudentDBHelper(context: Context) : SQLiteOpenHelper(
     }
 
     @Throws(SQLiteConstraintException::class)
-
     fun updateStudent(student: StudentModel): Int {
         // Gets the data repository in write mode
         val db = writableDatabase
-
         // Create a new map of values, where column names are the keys
         val values = ContentValues()
         values.put(DBContract.UserEntry.COLUMN_NAME, student.name)
         values.put(DBContract.UserEntry.COLUMN_AGE, student.age)
-
         // Which row to update, based on the title
         val selection = DBContract.UserEntry.COLUMN_NIM + " LIKE ?"
         val selectionArgs = arrayOf(student.nim)
-
         return db.update(
             DBContract.UserEntry.TABLE_NAME,
             values,
@@ -181,17 +171,13 @@ class StudentDBHelper(context: Context) : SQLiteOpenHelper(
     }
 
     @Throws(SQLiteConstraintException::class)
-
     fun deleteStudent(nim: String): Int {
         // Gets the data repository in write mode
         val db = writableDatabase
-
         // Define 'where' part of query.
         val selection = DBContract.UserEntry.COLUMN_NIM + " LIKE ?"
-
         // Specify arguments in placeholder order.
         val selectionArgs = arrayOf(nim)
-
         // Issue SQL statement.
         return db.delete(
             DBContract.UserEntry.TABLE_NAME, selection,

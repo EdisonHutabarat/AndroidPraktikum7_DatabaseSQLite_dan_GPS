@@ -17,7 +17,9 @@ class CreateActivity : AppCompatActivity() {
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         studentDBHelper = StudentDBHelper(this)
+
         binding.btnSimpan.setOnClickListener {
             val nim = binding.etNIM.text.toString()
             val name = binding.etNama.text.toString()
